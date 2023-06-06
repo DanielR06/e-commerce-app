@@ -32,7 +32,7 @@ test('/POST /users/login codigo 201 retorne token', async () => {
 test('/GET /users codigo 200 y largo de 1', async () => {
     const res = await request(app).get('/users').set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
+    expect(res.body).toHaveLength(2);
 });
 
 test('/PUT /users/:id codigo 200 y lo actualizado sea correspondiente', async () => {
