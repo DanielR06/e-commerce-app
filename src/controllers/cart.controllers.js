@@ -39,7 +39,7 @@ const remove = catchError(async(req, res) => {
 const update = catchError(async(req, res) => {
     const { id } = req.params;
     const result = await Cart.update(
-        req.body,
+        req.body.quantity,
         { where: {id}, returning: true }
     );
     if(result[0] === 0) return res.sendStatus(404);
