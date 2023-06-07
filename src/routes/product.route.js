@@ -14,6 +14,6 @@ productRouter.route('/:id')
     .put(verifyJWT, update);
 
 productRouter.route('/:id/images')
-    .post(setProductImgs);
+    .post(verifyJWT, setProductImgs);
 
 module.exports = productRouter;

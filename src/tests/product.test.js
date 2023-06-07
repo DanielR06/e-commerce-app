@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const Category = require('../models/Category');
+const ProductImg = require('../models/ProductImg');
 require('../models')
 
 let productId;
@@ -40,6 +41,20 @@ test('/GET /products codigo 200 y largo de 1', async () => {
     expect(res.body).toHaveLength(1);
 });
 
+test('/POST /products/:id/images', async () => {
+    const image = await ProductImg.create({
+        url:'http://false.url.com',
+        publicId: 'false id'
+    });
+    const res = await request(app)
+        .post(`/products/${productId}/images`)
+        .send([image.id])
+        .set('Authorization', `Bearer ${token}`);
+    await image.destroy();
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(1);
+});
+
 test('/PUT /products/:id codigo 200 y lo actualizado sea correspondiente', async () => {
     const productUpdated = {
         brand: 'Samsung Updated'
@@ -51,6 +66,7 @@ test('/PUT /products/:id codigo 200 y lo actualizado sea correspondiente', async
     expect(res.status).toBe(200);
     expect(res.body.brand).toBe(productUpdated.brand);
 });
+
 
 test('/DELETE /products:id codigo 204', async () => {
     const res = await request(app)
